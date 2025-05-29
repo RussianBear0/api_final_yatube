@@ -61,9 +61,12 @@ class FollowSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        if self.context['request'].user != data.get('following'):
-            return True
-        raise serializers.ValidationError("Самоподписка запрещена")
+        request_user = self.context['request'].user
+        following_user = data.get('following')
+    
+        if request_user.id == following_user.id:
+            raise serializers.ValidationError("Самоподписка запрещена")
+        return True
 
 
 class GroupSerializer(serializers.ModelSerializer):
