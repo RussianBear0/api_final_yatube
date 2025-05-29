@@ -51,7 +51,7 @@ class FollowSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('user', 'following')
+        fields = ("id", 'user', 'following')
         model = Follow
         validators = [
             UniqueTogetherValidator(
@@ -60,13 +60,11 @@ class FollowSerializer(serializers.ModelSerializer):
             )
         ]
 
-    def validate(self, data):
+    def validate_following(self, value):
         request_user = self.context['request'].user
-        following_user = self.context['request'].following
-    
-        if request_user.id == following_user.id:
+        if request_user.id == value.id:
             raise serializers.ValidationError("Самоподписка запрещена")
-        return True
+        return value
 
 
 class GroupSerializer(serializers.ModelSerializer):
