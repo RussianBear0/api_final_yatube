@@ -26,16 +26,27 @@ class PostAdmin (admin.ModelAdmin):
     list_filter = ('pub_date',)
 
 
-class GroupAdmin (admin.ModelAdmin):
-    
-
 class CommentAdmin (admin.ModelAdmin):
+    model = Comment
+    list_display = ('author',
+                    'post',
+                    'text',
+                    "created",
+                    )
+    list_editable = ("post",)
+    search_fields = ('text',)
+    list_filter = ('created',)
 
 
 class FollowAdmin (admin.ModelAdmin):
-
+    model = Follow
+    list_display = ('user',
+                    'following',
+                    )
+    list_editable = ("following",)
+    search_fields = ('user',)
 
 admin.site.register(Post, PostAdmin)
 admin.site.register(Group, GroupAdmin)
-admin.site.register(Comment)
-admin.site.register(Follow) 
+admin.site.register(Comment, CommentAdmin)
+admin.site.register(Follow, FollowAdmin) 
