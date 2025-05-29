@@ -62,7 +62,7 @@ class FollowSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         request_user = self.context['request'].user
-        following_user = data.get('following')
+        following_user = self.context['request'].following
     
         if request_user.id == following_user.id:
             raise serializers.ValidationError("Самоподписка запрещена")
