@@ -26,6 +26,11 @@ class Post(models.Model):
         on_delete=models.SET_NULL,
         related_name='posts',
         blank=True, null=True, )
+    
+    class Meta:
+        verbose_name = "Пост"
+        verbose_name_plural = "Посты"
+        ordering = ("created_at",)
 
     def __str__(self):
         return self.text
